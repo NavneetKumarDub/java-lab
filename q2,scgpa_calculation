@@ -1,0 +1,62 @@
+import java.util.Scanner;
+
+class Student {
+    String usn;
+    String name;
+    int[] credits;
+    int[] marks;
+
+    int gradePoint(int m) {
+        if (m >= 90) return 10;
+        if (m >= 80) return 9;
+        if (m >= 70) return 8;
+        if (m >= 60) return 7;
+        if (m >= 50) return 6;
+        if (m >= 40) return 5;
+        return 0;
+    }
+}
+
+public class StudentMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Student s = new Student();
+
+        System.out.println("Enter USN:");
+        s.usn = sc.nextLine();
+
+        System.out.println("Enter Name:");
+        s.name = sc.nextLine();
+
+        System.out.println("Enter number of subjects:");
+        int n = sc.nextInt();
+
+        s.credits = new int[n];
+        s.marks = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("Enter credits for subject " + (i + 1) + ":");
+            s.credits[i] = sc.nextInt();
+
+            System.out.println("Enter marks for subject " + (i + 1) + ":");
+            s.marks[i] = sc.nextInt();
+        }
+
+        int totalCredits = 0;
+        int totalPoints = 0;
+
+        for (int i = 0; i < n; i++) {
+            totalCredits += s.credits[i];
+            totalPoints += s.credits[i] * s.gradePoint(s.marks[i]);
+        }
+
+        double sgpa = (double) totalPoints / totalCredits;
+
+        System.out.println("USN: " + s.usn);
+        System.out.println("Name: " + s.name);
+        System.out.printf("SGPA: %.2f\n", sgpa);
+
+        sc.close();
+    }
+}
