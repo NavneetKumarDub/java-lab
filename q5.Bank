@@ -1,0 +1,126 @@
+import java.util.Scanner;
+
+class Account {
+    String name;
+    int accNo;
+    double balance;
+
+    void deposit(double amt) {
+        balance += amt;
+    }
+
+    void displayBalance() {
+        System.out.println("Balance: " + balance);
+    }
+}
+
+class SavAcct extends Account {
+    double rate = 0.05;
+
+    void computeInterest() {
+        double interest = balance * rate;
+        balance += interest;
+        System.out.println("Interest added: " + interest);
+    }
+
+    void withdraw(double amt) {
+        if (amt <= balance)
+            balance -= amt;
+        else
+            System.out.println("Insufficient balance");
+    }
+}
+
+class CurAcct extends Account {
+    double minBalance = 1000;
+    double penalty = 100;
+
+    void withdraw(double amt) {
+        if (amt <= balance) {
+            balance -= amt;
+            if (balance < minBalance) {
+                balance -= penalty;
+                System.out.println("Penalty imposed: " + penalty);
+            }
+        } else {
+            System.out.println("Insufficient balance");
+        }
+    }
+}
+
+public class BankMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter customer name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter account number: ");
+        int accNo = sc.nextInt();
+
+        System.out.print("Choose account type (1-Savings 2-Current): ");
+        int type = sc.nextInt();
+
+        if (type == 1) {
+            SavAcct s = new SavAcct();
+            s.name = name;
+            s.accNo = accNo;
+
+            System.out.print("Enter initial balance: ");
+            s.balance = sc.nextDouble();
+
+            int ch;
+            do {
+                System.out.print("\n1.Deposit 2.Withdraw 3.Interest 4.Balance 5.Exit : ");
+                ch = sc.nextInt();
+
+                switch (ch) {
+                    case 1:
+                        System.out.print("Enter amount: ");
+                        s.deposit(sc.nextDouble());
+                        break;
+                    case 2:
+                        System.out.print("Enter amount: ");
+                        s.withdraw(sc.nextDouble());
+                        break;
+                    case 3:
+                        s.computeInterest();
+                        break;
+                    case 4:
+                        s.displayBalance();
+                        break;
+                }
+            } while (ch != 5);
+
+        } else {
+            CurAcct c = new CurAcct();
+            c.name = name;
+            c.accNo = accNo;
+
+            System.out.print("Enter initial balance: ");
+            c.balance = sc.nextDouble();
+
+            int ch;
+            do {
+                System.out.print("\n1.Deposit 2.Withdraw 3.Balance 4.Exit : ");
+                ch = sc.nextInt();
+
+                switch (ch) {
+                    case 1:
+                        System.out.print("Enter amount: ");
+                        c.deposit(sc.nextDouble());
+                        break;
+                    case 2:
+                        System.out.print("Enter amount: ");
+                        c.withdraw(sc.nextDouble());
+                        break;
+                    case 3:
+                        c.displayBalance();
+                        break;
+                }
+            } while (ch != 4);
+        }
+
+        sc.close();
+    }
+}
