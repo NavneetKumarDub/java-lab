@@ -3,9 +3,11 @@ import java.util.Scanner;
 public class QuadraticEquation {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
+        System.out.print("Enter the Cooficient of x^2 : ");
         double a = sc.nextDouble();
+        System.out.print("Enter the Cooficient of x: ");
         double b = sc.nextDouble();
+        System.out.print("Enter the value of constant : ");
         double c = sc.nextDouble();
 
         double d = b * b - 4 * a * c;
